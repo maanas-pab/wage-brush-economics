@@ -44,6 +44,7 @@ st.session_state.wage = wage
 scale = st.radio("Brush scaling", ["linear", "sqrt"], horizontal=True,
                  help="linear = honest proportion. sqrt = area-corrected so CEOs can still draw.")
 brush = wage_to_brush(wage, scale)
+color = st.color_picker("Paint color", "#1f77b4")
 stroke_color = color + "ff" if color.startswith("#") and len(color) == 7 else color
 
 c1, c2, c3 = st.columns(3)
@@ -63,8 +64,6 @@ with st.expander("💰 What does this wage mean? (labor value)", expanded=True):
         "A CEO covers rent in 4 hours. A minimum-wage worker needs 276. "
         "Same house, different brushes — same economy, different lives."
     )
-
-color = st.color_picker("Paint color", "#1f77b4")
 
 tab_paint, tab_compare = st.tabs(["🎨 Free paint", "⚖️ Same house challenge"])
 
