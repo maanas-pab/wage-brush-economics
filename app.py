@@ -32,12 +32,13 @@ with st.sidebar:
 if "wage" not in st.session_state:
     st.session_state.wage = 15
 
-wage = st.slider("Hourly wage ($/hr)", 7, 500, st.session_state.wage,
+wage = st.slider("Hourly wage ($/hr)", 7, 500, int(st.session_state.wage),
                  help="Min wage → hairline. CEO → roller.")
 st.session_state.wage = wage
 scale = st.radio("Brush scaling", ["linear", "sqrt"], horizontal=True,
                  help="linear = honest proportion. sqrt = area-corrected so CEOs can still draw.")
 brush = wage_to_brush(wage, scale)
+stroke_color = color + "ff" if color.startswith("#") and len(color) == 7 else color
 
 c1, c2, c3 = st.columns(3)
 c1.metric("Wage", f"${wage}/hr")
@@ -62,12 +63,19 @@ color = st.color_picker("Paint color", "#1f77b4")
 tab_paint, tab_compare = st.tabs(["🎨 Free paint", "⚖️ Same house challenge"])
 
 with tab_paint:
-    show_guide = st.checkbox("Show house template to trace 🏠", value=True)
-    bg = house_template() if show_guide else None
+    col_opts, col_clear = st.columns([3, 1])
+    show_guide = col_opts.checkbox("Show house template to trace 🏠", value=True)
+    if col_clear.button("🧹 Clear canvas"):
+        st.rerun()
+    bg = None
+    try:
+        bg = house_template() if show_guide else None
+    except Exception:
+        bg = None
     canvas = st_canvas(
         fill_color="rgba(255,255,255,0)",
         stroke_width=brush,
-        stroke_color=color,
+        stroke_color=stroke_color,
         background_color="#fafafa",
         background_image=bg,
         height=400,
@@ -88,7 +96,7 @@ with tab_compare:
         st_canvas(
             fill_color="rgba(255,255,255,0)",
             stroke_width=wage_to_brush(7.25, scale),
-            stroke_color=color,
+            stroke_color=stroke_color,
             background_color="#fff",
             height=300,
             width=340,
@@ -100,10 +108,11 @@ with tab_compare:
         st_canvas(
             fill_color="rgba(255,255,255,0)",
             stroke_width=wage_to_brush(500, scale),
-            stroke_color=color,
+            stroke_color=stroke_color,
             background_color="#fff",
             height=300,
             width=340,
             drawing_mode="freedraw",
             key="brush-ceo",
         )
+    st.caption("Tip: on mobile the canvases stack — still the same challenge, just scroll.")
