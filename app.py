@@ -116,3 +116,6 @@ with tab_compare:
             key="brush-ceo",
         )
     st.caption("Tip: on mobile the canvases stack — still the same challenge, just scroll.")
+
+st.divider()
+st.caption("Wage Brush Economics · paint inequality · BLS OES 2024 · MIT")
