@@ -2,7 +2,7 @@
 import streamlit as st
 from streamlit_drawable_canvas import st_canvas
 
-from src.economics import brush_label, wage_to_brush
+from src.economics import brush_label, hours_to_earn, paint_multiplier, wage_to_brush
 from src.house import house_template
 from src.presets import PRESETS
 
@@ -31,6 +31,19 @@ c1, c2, c3 = st.columns(3)
 c1.metric("Wage", f"${wage}/hr")
 c2.metric("Brush", f"{brush}px")
 c3.metric("Class", brush_label(brush))
+
+with st.expander("💰 What does this wage mean? (labor value)", expanded=True):
+    mult = paint_multiplier(wage)
+    rent_hours = hours_to_earn(2000, wage)
+    house_hours = hours_to_earn(450_000, wage)
+    e1, e2, e3 = st.columns(3)
+    e1.metric("Paint per stroke", f"{mult:.1f}×", "vs min-wage worker")
+    e2.metric("Hours for $2k rent", f"{rent_hours:.1f}h")
+    e3.metric("Hours for $450k house", f"{house_hours:,.0f}h")
+    st.caption(
+        "A CEO covers rent in 4 hours. A minimum-wage worker needs 276. "
+        "Same house, different brushes — same economy, different lives."
+    )
 
 color = st.color_picker("Paint color", "#1f77b4")
 
