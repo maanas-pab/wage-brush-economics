@@ -1,12 +1,25 @@
 # 🖌️ Wage Brush Economics
 
+[![Live demo](https://img.shields.io/badge/live-streamlit_app-e76f51?logo=streamlit)](https://wage-brush-economics.streamlit.app/)
+
 > **Your brush size = your wage.** Income inequality you can paint.
+>
+> 🎨 **Try it live: https://wage-brush-economics.streamlit.app/**
 
 Move a wage slider from **$7 → $500/hr**. Minimum wage paints a thin
 hairline 🪡. CEO pay paints a giant roller 🧱. Draw the *same house*
 with both brushes — and feel labor value.
 
 Built with `streamlit` + `streamlit-drawable-canvas` in ~120 lines of app code.
+
+## 🖼️ Gallery
+
+| House reference (in-app trace guide) | Wage → brush mapping |
+|---|---|
+| ![House template](assets/house-template.png) | ![Brush scale](assets/brush-scale.png) |
+
+![US wage distribution](assets/wage-dist.png)
+*Same BLS-anchored data as the app sidebar — $7.25 minimum wage to $500 CEO cap.*
 
 ## ✨ What it does
 
