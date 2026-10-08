@@ -1,4 +1,5 @@
 """Wage Brush Economics — your brush size = your wage."""
+import pandas as pd
 import streamlit as st
 from streamlit_drawable_canvas import st_canvas
 
@@ -16,6 +17,13 @@ with st.sidebar:
         if st.button(f"{p['job']} — ${p['wage']}/hr", key=p["job"]):
             st.session_state.wage = p["wage"]
     st.divider()
+    st.subheader("📊 US wages (2024)")
+    try:
+        df = pd.read_csv("data/wages_2024.csv")
+        st.bar_chart(df.set_index("occupation")["hourly_median"])
+        st.caption("Source: BLS OES 2024, rounded. CEO capped at $500 for canvas.")
+    except FileNotFoundError:
+        st.caption("Wage dataset missing.")
 
 if "wage" not in st.session_state:
     st.session_state.wage = 15
