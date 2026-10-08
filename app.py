@@ -33,18 +33,48 @@ c3.metric("Class", brush_label(brush))
 
 color = st.color_picker("Paint color", "#1f77b4")
 
-canvas = st_canvas(
-    fill_color="rgba(255,255,255,0)",
-    stroke_width=brush,
-    stroke_color=color,
-    background_color="#fafafa",
-    height=400,
-    width=700,
-    drawing_mode="freedraw",
-    key="wage-brush",
-)
+tab_paint, tab_compare = st.tabs(["🎨 Free paint", "⚖️ Same house challenge"])
 
-st.info(
-    f"At ${wage}/hr you paint with a **{brush}px** brush. "
-    "Try $7 (hairline) vs $500 (roller) — draw the same house with both."
-)
+with tab_paint:
+    canvas = st_canvas(
+        fill_color="rgba(255,255,255,0)",
+        stroke_width=brush,
+        stroke_color=color,
+        background_color="#fafafa",
+        height=400,
+        width=700,
+        drawing_mode="freedraw",
+        key="wage-brush",
+    )
+    st.info(
+        f"At ${wage}/hr you paint with a **{brush}px** brush. "
+        "Try $7 (hairline) vs $500 (roller) — draw the same house with both."
+    )
+
+with tab_compare:
+    st.write("Draw the **same house** 🏠 with both brushes. Left = $7.25 minimum wage, right = $500 CEO.")
+    left, right = st.columns(2)
+    with left:
+        st.markdown("**🧾 Minimum wage — 1px hairline**")
+        st_canvas(
+            fill_color="rgba(255,255,255,0)",
+            stroke_width=wage_to_brush(7.25, scale),
+            stroke_color=color,
+            background_color="#fff",
+            height=300,
+            width=340,
+            drawing_mode="freedraw",
+            key="brush-min",
+        )
+    with right:
+        st.markdown("**👑 CEO — giant roller**")
+        st_canvas(
+            fill_color="rgba(255,255,255,0)",
+            stroke_width=wage_to_brush(500, scale),
+            stroke_color=color,
+            background_color="#fff",
+            height=300,
+            width=340,
+            drawing_mode="freedraw",
+            key="brush-ceo",
+        )
