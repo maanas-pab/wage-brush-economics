@@ -7,7 +7,11 @@ from src.economics import brush_label, hours_to_earn, paint_multiplier, wage_to_
 from src.house import house_template
 from src.presets import PRESETS
 
-st.set_page_config(page_title="Wage Brush Economics", page_icon="🖌️")
+st.set_page_config(page_title="Wage Brush Economics", page_icon="🖌️", layout="wide")
+st.markdown(
+    "<style>.stApp {max-width: 1100px; margin: auto;} canvas {border-radius: 12px;}</style>",
+    unsafe_allow_html=True,
+)
 st.title("🖌️ Wage Brush Economics")
 st.caption("Income inequality you can paint. Brush size = hourly wage.")
 
