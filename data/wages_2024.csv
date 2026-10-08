@@ -1,0 +1,15 @@
+occupation,hourly_median,source,note
+Federal minimum wage,7.25,FLSA 2009,Legal floor no state top-up
+Fast food worker,14.50,BLS OES 2024 approx,Food prep & serving
+Barista,16.00,BLS OES 2024 approx,Service
+Retail cashier,15.75,BLS OES 2024 approx,Sales
+Warehouse associate,19.50,BLS OES 2024 approx,Logistics
+Home health aide,17.20,BLS OES 2024 approx,Care work
+Construction laborer,22.80,BLS OES 2024 approx,Trades
+US median all workers,29.00,BLS OES 2024,All occupations median
+Electrician,32.60,BLS OES 2024 approx,Skilled trade
+Registered nurse,45.00,BLS OES 2024 approx,Healthcare
+Teacher (K-12),36.50,BLS OES 2024 approx,Education
+Software engineer,75.00,BLS OES 2024 approx,Tech
+Physician (surgeon),150.00,BLS OES 2024 approx,Top profession
+Fortune-500 CEO hourly equiv,500.00,AFL-CIO paywatch capped for canvas,Top executive
