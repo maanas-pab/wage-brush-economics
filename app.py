@@ -2,17 +2,21 @@
 import streamlit as st
 from streamlit_drawable_canvas import st_canvas
 
+from src.economics import brush_label, wage_to_brush
+
 st.set_page_config(page_title="Wage Brush Economics", page_icon="🖌️")
 st.title("🖌️ Wage Brush Economics")
 st.caption("Income inequality you can paint. Brush size = hourly wage.")
 
 wage = st.slider("Hourly wage ($/hr)", 7, 500, 15, help="Min wage → hairline. CEO → roller.")
-brush = int(1 + (wage - 7) / (500 - 7) * 59)  # 1px → 60px
+scale = st.radio("Brush scaling", ["linear", "sqrt"], horizontal=True,
+                 help="linear = honest proportion. sqrt = area-corrected so CEOs can still draw.")
+brush = wage_to_brush(wage, scale)
 
 c1, c2, c3 = st.columns(3)
 c1.metric("Wage", f"${wage}/hr")
 c2.metric("Brush", f"{brush}px")
-c3.metric("Class", "Hairline" if brush < 8 else "Roller" if brush > 40 else "Brush")
+c3.metric("Class", brush_label(brush))
 
 color = st.color_picker("Paint color", "#1f77b4")
 
