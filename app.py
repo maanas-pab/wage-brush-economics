@@ -69,20 +69,22 @@ tab_paint, tab_compare = st.tabs(["🎨 Free paint", "⚖️ Same house challeng
 
 with tab_paint:
     col_opts, col_clear = st.columns([3, 1])
-    show_guide = col_opts.checkbox("Show house template to trace 🏠", value=True)
+    show_guide = col_opts.checkbox("Show house reference 🏠", value=True)
     if col_clear.button("🧹 Clear canvas"):
         st.rerun()
-    bg = None
-    try:
-        bg = house_template() if show_guide else None
-    except Exception:
-        bg = None
+    # NOTE: don't pass background_image to st_canvas — drawable-canvas 0.9.3
+    # calls st_image.image_to_url() which is removed in modern Streamlit.
+    # Show the template as a plain reference image instead (dependency-free).
+    if show_guide:
+        try:
+            st.image(house_template(), caption="Trace this house → draw it below")
+        except Exception:
+            pass
     canvas = st_canvas(
         fill_color="rgba(255,255,255,0)",
         stroke_width=brush,
         stroke_color=stroke_color,
         background_color="#fafafa",
-        background_image=bg,
         height=400,
         width=700,
         drawing_mode="freedraw",
