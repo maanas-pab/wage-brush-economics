@@ -24,7 +24,13 @@ with st.sidebar:
     st.subheader("📊 US wages (2024)")
     try:
         df = pd.read_csv("data/wages_2024.csv")
-        st.bar_chart(df.set_index("occupation")["hourly_median"])
+        # NOTE: st.bar_chart pulls Altair, which is broken on
+        # Streamlit Cloud's Python 3.14 runtime. dataframe is dependency-free.
+        st.dataframe(
+            df[["occupation", "hourly_median"]],
+            hide_index=True,
+            use_container_width=True,
+        )
         st.caption("Source: BLS OES 2024, rounded. CEO capped at $500 for canvas.")
     except FileNotFoundError:
         st.caption("Wage dataset missing.")
