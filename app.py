@@ -3,6 +3,7 @@ import streamlit as st
 from streamlit_drawable_canvas import st_canvas
 
 from src.economics import brush_label, wage_to_brush
+from src.house import house_template
 from src.presets import PRESETS
 
 st.set_page_config(page_title="Wage Brush Economics", page_icon="🖌️")
@@ -36,11 +37,14 @@ color = st.color_picker("Paint color", "#1f77b4")
 tab_paint, tab_compare = st.tabs(["🎨 Free paint", "⚖️ Same house challenge"])
 
 with tab_paint:
+    show_guide = st.checkbox("Show house template to trace 🏠", value=True)
+    bg = house_template() if show_guide else None
     canvas = st_canvas(
         fill_color="rgba(255,255,255,0)",
         stroke_width=brush,
         stroke_color=color,
         background_color="#fafafa",
+        background_image=bg,
         height=400,
         width=700,
         drawing_mode="freedraw",
